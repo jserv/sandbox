@@ -5,9 +5,8 @@ static inline int64_t reverse(int64_t x, int bs)
     int b = bs - 1;
     int64_t r = 0;
     for (int i = 0; i < bs; ++i) {
-        if (x & (1 << i)) {
+        if (x & (1 << i))
             r |= (1 << (b - i));
-        }
     }
     return r;
 }
@@ -56,7 +55,7 @@ void tinyid_encode(tinyid_t *id, int64_t x, char *buf, int n)
 
     *(buf + n) = id->al[x];
 
-    // add paddding
+    /* add padding */
     while (n > 0) {
         --n;
         *(buf + n) = id->al[0];
@@ -75,7 +74,7 @@ int64_t tinyid_decode(tinyid_t *id, const char *s, int n)
 
 void tinyid_init(tinyid_t *id, int bs, const char *al, int al_len)
 {
-    // build indices
+    /* build indices */
     for (int i = 0; i < al_len; ++i)
         id->indices[al[i] - 0x30] = i;
 
