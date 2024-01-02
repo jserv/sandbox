@@ -11,7 +11,7 @@
 struct stack stk;
 
 /* Read a number from a postfix expression. */
-int read_num(const char *p, int *i)
+static int read_num(const char *p, int *i)
 {
     int r = 0;
     while (isdigit(*(p + *i))) {
@@ -21,12 +21,12 @@ int read_num(const char *p, int *i)
     return r;
 }
 
-bool isop(char op)
+static bool isop(char op)
 {
     return (op == '+' || op == '-' || op == '*' || op == '/') ? true : false;
 }
 
-int prior(char op)
+static int prio(char op)
 {
     switch (op) {
     case '\0':
@@ -44,13 +44,13 @@ int prior(char op)
     }
 }
 
-void exiterr(const char *s)
+static void exiterr(const char *s)
 {
     fputs(s, stderr);
     exit(EXIT_FAILURE);
 }
 
-void help()
+static void help()
 {
     fprintf(stdout,
             "Usage: calc [options] [1*(2+3)]\n\n"
@@ -59,7 +59,7 @@ void help()
             "-h\thelp\n");
 }
 
-int operate(char op)
+static int operate(char op)
 {
     int b = stack_pop(&stk);
     int a = stack_pop(&stk);
@@ -85,7 +85,7 @@ int operate(char op)
 }
 
 /* Evaluate a postfix expression */
-int calculate(const char *s)
+static int calculate(const char *s)
 {
     int i = 0;
     char c;
@@ -103,14 +103,14 @@ int calculate(const char *s)
     return stack_pop(&stk);
 }
 
-int chcat(char *s, char c, int i)
+static int chcat(char *s, char c, int i)
 {
     *(s + i) = c;
     return ++i;
 }
 
 /* Infix Expression to Postfix Expression Conversion. */
-char *convert(const char *s, char *dst)
+static char *convert(const char *s, char *dst)
 {
     struct stack sk;
     stack_init(&sk);
@@ -131,7 +131,7 @@ char *convert(const char *s, char *dst)
             stack_pop(&sk);
         } else if (isop(c)) {
             j = chcat(dst, ' ', j);
-            while (prior(c) <= prior((char) stack_top(&sk))) {
+            while (prio(c) <= prio((char) stack_top(&sk))) {
                 j = chcat(dst, (char) stack_pop(&sk), j);
             }
             stack_push(&sk, c);
@@ -160,7 +160,6 @@ int main(int argc, char **argv)
         printf("You have exited.\n");
         return 0;
     }
-
 
     int output = 0; /* Whether to display the postfix expression */
     char opt;

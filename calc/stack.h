@@ -1,5 +1,4 @@
-#ifndef CALC_STACK_H
-#define CALC_STACK_H
+#pragma once
 
 #define STACK_MAX_SIZE 128
 
@@ -35,5 +34,3 @@ static inline int stack_empty(struct stack *s)
 {
     return s->top == -1;
 }
-
-#endif  // CALC_STACK_H

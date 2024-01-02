@@ -1,8 +1,8 @@
 # Calculator
 
-Here is a basic implementation of an integer calculator in pure C.
+Here is a basic implementation of an integer calculator in C.
 It utilizes Reverse Polish Notation (RPN) to perform calculations.
-For example, `1*(2+3)` is represented as `1 2 3+*`, which results in the output `5`.
+For example, `1*(2+3)` is represented as `1 2 3 + *`, which results in the output `5`.
 
 ## Usage
 To calculate `1*(2+3)`, just run:
